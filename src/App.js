@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+
+import Routes from './navigation/Routes'
 
 export default function App() {
     return (
-        <View>
-            <Text>Opet App 2</Text>
-        </View>
+        <Routes/>
     )
 }
+
