@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
@@ -11,7 +11,7 @@ import IconMa from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import IconMaC from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
+const logo = {uri: 'https://van.bel.tr/assets/img/logo.png'};
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -19,10 +19,19 @@ const Drawer = createDrawerNavigator();
 const HomeScreenStack = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} options={{
-          title:'',
-          headerLeft: ()=> {} //Fonksiyon Image componentini çalıştıracak
-          }} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: '',
+          headerLeft: () => (
+            <Image
+              style={{width: 70, height: 24, marginLeft: 10}}
+              source={logo}
+            />
+          ), //Fonksiyon Image componentini çalıştıracak
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -33,6 +42,7 @@ const MyDrawer = () => {
       drawerStyle={{
         backgroundColor: '#0271cd',
       }}
+      //screenOptions artık kullanılıyor drawerContentOptions yerine
       drawerContentOptions={{
         activeTintColor: '#fff',
         inactiveTintColor: '#fff',
@@ -51,20 +61,19 @@ const MyDrawer = () => {
         component={HomeScreenStack}
         options={{
           drawerLabel: 'Ana Sayfa',
-          drawerIcon: focused => {
-            <IconMa name="home" size={24} color="#fff" />;
-          },
+          drawerIcon: ({focused}) => (
+            <IconMa name="home" size={24} color="red" />
+          ),
         }}
       />
-
       <Drawer.Screen
         name="KampanyaScreen"
         component={HomeScreenStack}
         options={{
           drawerLabel: 'Kampanyalar',
-          drawerIcon: focused => {
-            <IconMa name="campaign" size={24} color="#fff" />;
-          },
+          drawerIcon: ({focused}) => (
+            <IconMa name="campaign" size={24} color="red" />
+          ),
         }}
       />
     </Drawer.Navigator>
