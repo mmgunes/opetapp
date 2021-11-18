@@ -4,19 +4,20 @@ import {View, Text} from 'react-native';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+
+import HomeScreen  from '../screens/Home';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function Routes() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
-        <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View>
+        <Text>
+            Opet App Routes
+        </Text>
+    </View>
   );
 }
 /*
@@ -37,10 +38,13 @@ Bunları import et
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer'
 
 Değişken Tanımla
 
 const Stack = createStackNavigator(); //Navigationları Stack değişkenimizle çağıracağız
+const Drawer = createDrawerNavigator();
+
 
 Başlangıç Route belirle
 
