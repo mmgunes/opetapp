@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
 
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
@@ -16,20 +16,68 @@ const logo = {uri: 'https://van.bel.tr/assets/img/logo.png'};
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const HomeScreenStack = () => {
+const NavigationDrawerStructure = props => {
+  const toggleDrawer = () => {
+    props.navigationProps.toggleDrawer();
+  };
+  return (
+    <TouchableOpacity style={{marginRight:10}} onPress={() =>toggleDrawer()} >
+      <IconMa name="menu" size={28} color="#fff" />
+    </TouchableOpacity>
+  )
+}
+
+const HomeScreenStack = ({navigation}) => {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          title: '',
-          headerLeft: () => (
+          title: '',//Fonksiyon Image componentini çalıştıracak
+          headerRight: () => (
+            <  NavigationDrawerStructure navigationProps={navigation} />
+          ),
+         headerLeft: () => (
             <Image
               style={{width: 70, height: 24, marginLeft: 10}}
               source={logo}
             />
+          ), 
+          headerTransparent: true,
+          headerTintColor: '#fff',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const KampanyaScreenStack = ({navigation}) => {
+  return (
+    <Stack.Navigator initialRouteName="Kampanya">
+      <Stack.Screen
+        name="Kampanya"
+        component={KampanyaScreen}
+        options={{
+          title: 'Kampanyalar',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <Image
+                style={{width: 70, height: 24, marginLeft: 10}}
+                source={logo}
+              />
+            </TouchableOpacity>
           ), //Fonksiyon Image componentini çalıştıracak
+          headerRight: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#0271cd',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
         }}
       />
     </Stack.Navigator>
@@ -57,7 +105,7 @@ const MyDrawer = () => {
         },
       }}>
       <Drawer.Screen
-        name="HomeScreen"
+        name="Home 2 Screen"
         component={HomeScreenStack}
         options={{
           drawerLabel: 'Ana Sayfa',
