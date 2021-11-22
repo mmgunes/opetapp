@@ -11,6 +11,31 @@ import {
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import {deviceHeight, deviceWidth} from '../utils/Dimensions';
 
+import {FlatListSlider} from 'react-native-flatlist-slider';
+
+const images = [
+  {
+    image:
+      'https://images.unsplash.com/photo-1567226475328-9d6baaf565cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+    desc: 'Title 1',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1455620611406-966ca6889d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1130&q=80',
+    desc: 'Title 22',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1567226475328-9d6baaf565cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+    desc: 'Title 333',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1455620611406-966ca6889d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1130&q=80',
+    desc: 'Title 4444',
+  },
+];
+
 const bgImage = {uri: 'https://van.bel.tr/dosya/slider/3.jpg'};
 //const deviceWidth = Dimensions.get('window').width; //Ekranın genişlik değeri
 //const deviceHeight = Dimensions.get('window').height;
@@ -26,10 +51,20 @@ export default function HomeScreen({navigation}) {
             backgroundColor: '#e9bc18',
             // height: deviceHeight / 2,
           }}>
-          <Text>
-            asdlja{deviceHeight}45564{deviceWidth} aşskld
-          </Text>
-          <Image
+         
+          <FlatListSlider
+            data={images}
+            height={deviceHeight/2}
+            timer={2000}
+            onPress={item => alert(JSON.stringify(item))}
+            contentContainerStyle={{paddingHorizontal: 0}}
+            indicatorContainerStyle={{position: 'absolute', bottom: 20}}
+            indicatorActiveColor={'#e9bc18'}
+            indicatorInActiveColor={'#ffffff'}
+            indicatorActiveWidth={30}
+            animation
+          />
+          {/* <Image
             style={{
               resizeMode: 'cover',
               width: deviceWidth,
@@ -38,7 +73,7 @@ export default function HomeScreen({navigation}) {
             source={{
               uri: 'https://reactnative.dev/img/tiny_logo.png',
             }}
-          />
+          /> */}
         </View>
         <View style={{flex: 1, width: '100%', marginTop: 35}}>
           <View style={{flex: 1, flexDirection: 'row'}}>
@@ -47,13 +82,13 @@ export default function HomeScreen({navigation}) {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderWidth: 1,
+                borderRightWidth: 1,
                 borderRightColor: 'rgba(255, 255, 255,0.2)',
+                borderBottomWidth:1,
                 borderBottomColor: 'rgba(255, 255, 255,0.2)',
               }}>
               <Text style={{color: 'white', fontSize: 24}}>En Yakın Opet</Text>
               <Text style={{color: 'white', fontSize: 24}}>4,7 Km</Text>
-              
             </View>
             <View
               style={{
@@ -62,10 +97,10 @@ export default function HomeScreen({navigation}) {
                 justifyContent: 'center',
                 borderRightWidth: 1,
                 borderBottomColor: 'rgba(255, 255, 255,0.2)',
-                borderBottomWidth:1
+                borderBottomWidth: 1,
               }}>
               <Text style={{color: 'white', fontSize: 24}}>Akıllı Dolum</Text>
-              <IconMa name='local-gas-station' color='white' size={48}/>
+              <IconMa name="local-gas-station" color="white" size={48} />
             </View>
           </View>
           <View style={{flex: 1, flexDirection: 'row'}}>
@@ -85,10 +120,9 @@ export default function HomeScreen({navigation}) {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-               
               }}>
               <Text style={{color: 'white', fontSize: 24}}>Ödeme Yap </Text>
-              <IconMa name='payment' color='white' size={48}/>
+              <IconMa name="payment" color="white" size={48} />
             </View>
           </View>
         </View>
