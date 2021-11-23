@@ -9,6 +9,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomeScreen from '../screens/Home';
 import KampanyaScreen from '../screens/Kampanya';
 import KampanyaDetayScreen from '../screens/KampanyaDetay'
+import IletisimScreen from '../screens/Iletisim'
 
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome';
@@ -88,6 +89,37 @@ const KampanyaScreenStack = ({navigation}) => {
     </Stack.Navigator>
   );
 };
+const IletisimScreenStack = ({navigation}) => {
+  return (
+    <Stack.Navigator initialRouteName="IletisimScreen">
+      <Stack.Screen
+        name="IletisimScreen"
+        component={IletisimScreen}
+        options={{
+          title: 'Bize Ulaşın',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+              <Image
+                style={{width: 70, height: 24, marginLeft: 10}}
+                source={logo}
+              />
+            </TouchableOpacity>
+          ), //Fonksiyon Image componentini çalıştıracak
+          headerRight: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#0271cd',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const MyDrawer = () => {
   return (
@@ -126,6 +158,16 @@ const MyDrawer = () => {
           drawerLabel: 'Kampanyalar',
           drawerIcon: ({focused}) => (
             <IconMa name="campaign" size={24} color="red" />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="İletişim Sayfamız"
+        component={IletisimScreenStack} // component={IletisimScreenStack}
+        options={{
+          drawerLabel: 'İletişim',
+          drawerIcon: ({focused}) => (
+            <IconMa name="contacts" size={24} color="red" />
           ),
         }}
       />
