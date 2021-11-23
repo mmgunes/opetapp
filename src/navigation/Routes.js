@@ -128,7 +128,7 @@ const MyDrawer = () => {
         backgroundColor: '#0271cd',
       }}
       //screenOptions artık kullanılıyor drawerContentOptions yerine
-      drawerContentOptions={{
+      screenOptions={{
         activeTintColor: '#fff',
         inactiveTintColor: '#fff',
         headerStyle: {
