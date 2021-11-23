@@ -48,17 +48,17 @@ export default function HomeScreen({navigation}) {
         <View
           style={{
             flex: 1,
-            backgroundColor: '#e9bc18',
+            //backgroundColor: '#e9bc18',
             // height: deviceHeight / 2,
           }}>
          
           <FlatListSlider
             data={images}
-            height={deviceHeight/2}
-            timer={2000}
+            height={deviceHeight/2} //height={240}
+            timer={2500}
             onPress={item => alert(JSON.stringify(item))}
             contentContainerStyle={{paddingHorizontal: 0}}
-            indicatorContainerStyle={{position: 'absolute', bottom: 20}}
+            indicatorContainerStyle={{position: 'absolute', bottom: 15}}
             indicatorActiveColor={'#e9bc18'}
             indicatorInActiveColor={'#ffffff'}
             indicatorActiveWidth={30}

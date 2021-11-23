@@ -7,11 +7,14 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import HomeScreen from '../screens/Home';
+import KampanyaScreen from '../screens/Kampanya';
+import KampanyaDetayScreen from '../screens/KampanyaDetay'
+
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import IconMaC from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const logo = {uri: 'https://van.bel.tr/assets/img/logo.png'};
+const logo = {uri: 'https://reactnative.dev/img/tiny_logo.png'};
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -21,29 +24,29 @@ const NavigationDrawerStructure = props => {
     props.navigationProps.toggleDrawer();
   };
   return (
-    <TouchableOpacity style={{marginRight:10}} onPress={() =>toggleDrawer()} >
-      <IconMa name="menu" size={28} color="#fff" />
+    <TouchableOpacity style={{marginRight: 10}} onPress={() => toggleDrawer()}>
+      <IconMa name="menu" size={28} color="yellow" />
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const HomeScreenStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="HomeScreen">
       <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          title: '',//Fonksiyon Image componentini çalıştıracak
-          headerRight: () => (
-            <  NavigationDrawerStructure navigationProps={navigation} />
-          ),
-         headerLeft: () => (
+          title: '', //Fonksiyon Image componentini çalıştıracak
+          headerLeft: () => (
             <Image
               style={{width: 70, height: 24, marginLeft: 10}}
               source={logo}
             />
-          ), 
+          ),
+          headerRight: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
           headerTransparent: true,
           headerTintColor: '#fff',
         }}
@@ -54,14 +57,14 @@ const HomeScreenStack = ({navigation}) => {
 
 const KampanyaScreenStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="Kampanya">
+    <Stack.Navigator initialRouteName="KampanyaScreen">
       <Stack.Screen
-        name="Kampanya"
+        name="KampanyaScreen"
         component={KampanyaScreen}
         options={{
           title: 'Kampanyalar',
           headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
               <Image
                 style={{width: 70, height: 24, marginLeft: 10}}
                 source={logo}
@@ -91,7 +94,7 @@ const MyDrawer = () => {
         backgroundColor: '#0271cd',
       }}
       //screenOptions artık kullanılıyor drawerContentOptions yerine
-      drawerContentOptions={{
+      screenOptions={{
         activeTintColor: '#fff',
         inactiveTintColor: '#fff',
         headerStyle: {
@@ -105,7 +108,7 @@ const MyDrawer = () => {
         },
       }}>
       <Drawer.Screen
-        name="Home 2 Screen"
+        name="HomeScreen"
         component={HomeScreenStack}
         options={{
           drawerLabel: 'Ana Sayfa',
@@ -116,7 +119,7 @@ const MyDrawer = () => {
       />
       <Drawer.Screen
         name="KampanyaScreen"
-        component={HomeScreenStack}
+        component={KampanyaScreenStack} // component={KampanyaScreenStack}
         options={{
           drawerLabel: 'Kampanyalar',
           drawerIcon: ({focused}) => (
@@ -137,89 +140,19 @@ export default function Routes() {
           component={MyDrawer}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="KampanyaDetayScreen"
+          component={KampanyaDetayScreen}
+          options={{
+            title: 'Kampanya Detay',
+            headerStyle: {backgroundColor: '#0070d4'},
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-/*
-REACT NATİVE NAVİGATİON
-
-1-npm install @react-navigation/native --save  //Eğer save çalışmazsa --force yaz
-
-2-npm install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view --save
-
-3-npm install @react-navigation/drawer --save
-
-4-npm install @react-navigation/stack --save
-
-
-
-Bunları import et
-
-import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer'
-
-Değişken Tanımla
-
-const Stack = createStackNavigator(); //Navigationları Stack değişkenimizle çağıracağız
-const Drawer = createDrawerNavigator();
-
-
-Başlangıç Route belirle
-
-initialRouteName="..." ile Örn
- 
-return(içine yaz)
-<NavigationContainer> 
-      <Stack.Navigator initialRouteName="HomeScreen">
-
-
-<Stack.Screen //İlk Ekran
-          name="Home"
-          component={HomeScreen} //Çağıracağı Prop 
-          
-ÖRNEK/*/
-/*
-import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer'
-import {createStackNavigator} from '@react-navigation/stack';
-
-import HomeScreen from '../screens/Home';
-import FaktoriyelScren from '../screens/Faktoriyel';
-
-const Stack = createStackNavigator(); 
-const Drawer = createDrawerNavigator(); //Navigationları Drawer değişkenimizle çağıracağız
-		  
-		  const Routes = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false, //Geri butonu gözükmesin
-          }}></Stack.Screen>
-		  
-        <Stack.Screen
-          name="Faktoriyel"
-          component={FlexBoxScreen}
-          options={{
-            title: 'Faktoriyel Screen',
-            headerStyle: {backgroundColor: 'blue'},
-            headerTintColor: 'white',
-            headerTitleStyle: {fontWeight: 'bold'},
-          }}
-        />
-        ...
-		.<Stack.Screen/>..
-		...
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};*/
-
-//*
