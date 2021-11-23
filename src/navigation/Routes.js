@@ -14,7 +14,7 @@ import IconMa from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import IconMaC from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const logo = {uri: 'https://reactnative.dev/img/tiny_logo.png'};
+const logo = require('../img/logo.png');
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,7 +25,7 @@ const NavigationDrawerStructure = props => {
   };
   return (
     <TouchableOpacity style={{marginRight: 10}} onPress={() => toggleDrawer()}>
-      <IconMa name="menu" size={28} color="yellow" />
+      <IconMa name="menu" size={28} color="#fff" />
     </TouchableOpacity>
   );
 };
@@ -39,10 +39,12 @@ const HomeScreenStack = ({navigation}) => {
         options={{
           title: '', //Fonksiyon Image componentini çalıştıracak
           headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
             <Image
-              style={{width: 70, height: 24, marginLeft: 10}}
+              style={{width: 70, height: 33, marginLeft: 10}}
               source={logo}
             />
+          </TouchableOpacity>
           ),
           headerRight: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
@@ -94,7 +96,7 @@ const MyDrawer = () => {
         backgroundColor: '#0271cd',
       }}
       //screenOptions artık kullanılıyor drawerContentOptions yerine
-      screenOptions={{
+      drawerContentOptions={{
         activeTintColor: '#fff',
         inactiveTintColor: '#fff',
         headerStyle: {
