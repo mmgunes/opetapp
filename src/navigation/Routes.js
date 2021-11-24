@@ -10,6 +10,7 @@ import HomeScreen from '../screens/Home';
 import KampanyaScreen from '../screens/Kampanya';
 import KampanyaDetayScreen from '../screens/KampanyaDetay'
 import IletisimScreen from '../screens/Iletisim'
+import IletisimFormuScreen from '../screens/IletisimFormu'
 
 import IconMa from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome';
@@ -189,6 +190,18 @@ export default function Routes() {
           component={KampanyaDetayScreen}
           options={{
             title: 'Kampanya Detay',
+            headerStyle: {backgroundColor: '#0070d4'},
+            headerTintColor: '#ffffff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="IletisimFormuScreen"
+          component={IletisimFormuScreen}
+          options={{
+            title: 'İletisim Formu',
             headerStyle: {backgroundColor: '#0070d4'},
             headerTintColor: '#ffffff',
             headerTitleStyle: {

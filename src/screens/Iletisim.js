@@ -11,12 +11,12 @@ import IconMa from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import IconMaC from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const IletisimScreen = () => {
+const IletisimScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <ScrollView style={{flex: 1, backgroundColor: '#1a7ed3'}}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('IletisimFormuPage')}
+          onPress={() => navigation.navigate('IletisimFormuScreen')}
           style={{
             marginTop: 70,
             height: 90,
