@@ -1,17 +1,225 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
-import { CheckBox } from 'react-native-elements';
+import {useState} from 'react';
+
+import {CheckBox} from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNSmtpMailer from 'react-native-smtp-mailer';
+import {text} from 'react-native-communications';
+import { placeholder } from '@babel/types';
 
 const IletisimFormuScreen = () => {
-    return (
-        <View>
-            <Text>İletişim Formu  2</Text>
+  const [adi, setAdi] = useState('');
+  const [adiValid, setAdiValid] = useState(false);
+  const [adiValidMesaj, setAdiValidMesaj] = useState('Boş Geçilemez');
+
+  const [email, setEmail] = useState('');
+  const [emailValid, setEmailValid] = useState(false);
+  const [emailValidMesaj, setEmailValidMesaj] = useState('Boş Geçilemez');
+
+  const [telefon, setTelefon] = useState('');
+  const [telefonValid, setTelefonValid] = useState(false);
+  const [telefonValidMesaj, setTelefonValidMesaj] = useState('Boş Geçilemez');
+
+  const [konu, setKonu] = useState('');
+  const [konuValid, setKonuValid] = useState(false);
+  const [konuValidMesaj, setKonuValidMesaj] = useState('Boş Geçilemez');
+
+  const [mesaj, setMesaj] = useState('');
+  const [mesajValid, setMesajValid] = useState(false);
+  const [mesajValidMesaj, setMesajValidMesaj] = useState('Boş Geçilemez');
+
+  const [sozlesme, setSozlesme] = useState(false);
+
+  const checkAdi = text => {
+    setAdi(text);
+    if (text.length > 0) {
+      setAdiValid(true);
+    } else {
+      setAdiValid(false);
+    }
+  };
+
+  const checkEmail = text => {
+    setEmail(text);
+    if (text.length > 0) {
+      const reg =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (reg.test(String(text).toLowerCase())) {
+        setEmailValid(true);
+      } else {
+        setEmailValidMesaj('Geçerli bir email adresi giriniz');
+        setEmailValid(false);
+      }
+    } else {
+      setEmailValid(false);
+      setEmailValidMesaj('Boş Geçilemez');
+    }
+  };
+
+  const checkTelefon = text => {
+    setTelefon(text);
+    if (text.length > 0) {
+      if (text.length == 10) {
+        setTelefonValid(true);
+      } else {
+        setTelefonValidMesaj(
+          'Telefon numaranızı 10 hane olacak şekilde yazınız',
+        );
+        setTelefonValid(false);
+      }
+    } else {
+      setTelefonValid(false);
+      setTelefonValidMesaj('Boş Geçilemez !');
+    }
+  };
+
+  const checkKonu = value => {
+    setKonu(value);
+    if (value.length > 0) {
+      setKonuValid(true);
+    } else {
+      setKonuValid(false);
+      // setKonuValidMesaj('Boş Geçilemez');
+    }
+  };
+
+  const checkMesaj = text => {
+    setMesaj(text);
+    if (text.length > 0) {
+      setMesajValid(true);
+    } else {
+      setMesajValid(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={{flex: 1, backgroundColor: '#dddddd'}}>
+      <ScrollView style={{flex: 1}}>
+        <View style={{margin: 20}}>
+          <TextInput
+            value={adi}
+            onChangeText={text => checkAdi(text)}
+            style={{
+              backgroundColor: '#fff',
+              borderRadius: 30,
+              paddingLeft: 20,
+              marginBottom: 10,
+              height: 60,
+            }}
+            placeholder="Adınız ve Soyadınız *"
+            fontSize={18}
+            secureTextEntry={false}
+          />
+          {adiValid == false ? (
+            <View style={{alignItems: 'center', marginBottom: 20}}>
+              <Text style={{color: '#fff000', fontSize: 12}}>
+                adMsj {adiValidMesaj}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
+
+          <TextInput
+            value={email}
+            onChangeText={text => checkEmail(text)}
+            style={{
+              backgroundColor: '#fff',
+              borderRadius: 30,
+              paddingLeft: 20,
+              marginBottom: 10,
+              height: 60,
+            }}
+            placeholder="Email Adresiniz *"
+            fontSize={18}
+            keyboardType="email-address"
+          />
+          {emailValid == false ? (
+            <View style={{alignItems: 'center', marginBottom: 20}}>
+              <Text style={{color: '#fff000', fontSize: 12}}>
+                mail {emailValidMesaj}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
+
+          <TextInput
+            value={telefon}
+            onChangeText={text => checkTelefon(text)}
+            style={{
+              backgroundColor: '#fff',
+              borderRadius: 30,
+              paddingLeft: 20,
+              marginBottom: 10,
+              height: 60,
+            }}
+            placeholder="Telefon Numaranız *"
+            fontSize={18}
+            keyboardType="phone-pad"
+          />
+          {telefonValid == false ? (
+            <View style={{alignItems: 'center', marginBottom: 20}}>
+              <Text style={{color: '#fff000', fontSize: 12}}>
+                adMsj {telefonValidMesaj}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
+
+          <DropDownPicker
+            items={[
+              {
+                label: 'İstek',
+                value: 'Istek',
+                hidden: true,
+              },
+              {
+                label: 'Şikayet',
+                value: 'Sikayet',
+              },
+              {
+                label: 'Öneri',
+                value: 'Oneri',
+              },
+              {
+                label: 'Teşekkür',
+                value: 'Tesekkur',
+              },
+             
+            ]}
+            placeholder="Konu Seçiniz *"
+            defaultValue={konu}
+            containerStyle={{height:60}}
+            style={{backgroundColor: '#fff', marginBottom:10}}
+            itemStyle={{
+              justifyContent : 'flex-start'
+            }}
+            dropDownStyle={{backgroundColor: '#fafafa'}}
+            onChangeItem={(item)=>checkKonu(item.value)}
+          />
+          {
+            konuValid==false ?(
+              <View style={{alignItems:'center',marginBottom:20}}>
+                <Text style={{}}></Text>
+                </View>
+            ):(<></>
+            )
+          }
         </View>
-    )
-}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-export default IletisimFormuScreen
-
+export default IletisimFormuScreen;
