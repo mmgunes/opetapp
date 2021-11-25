@@ -16,7 +16,7 @@ import {FlatListSlider} from 'react-native-flatlist-slider';
 const images = [
   {
     image:
-      'https://images.unsplash.com/photo-1567226475328-9d6baaf565cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
+      'https://cdn.pixabay.com/photo/2017/05/24/15/42/eye-2340806_960_720.jpg',
     desc: 'Title 1',
   },
   {

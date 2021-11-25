@@ -13,8 +13,7 @@ import {useState} from 'react';
 import {CheckBox} from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNSmtpMailer from 'react-native-smtp-mailer';
-import {text} from 'react-native-communications';
-import { placeholder } from '@babel/types';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 const IletisimFormuScreen = () => {
   const [adi, setAdi] = useState('');
@@ -101,6 +100,43 @@ const IletisimFormuScreen = () => {
     }
   };
 
+  const mailGonder = async () => {
+    await RNSmtpMailer.sendMail({
+      mailhost: 'smtp.yandex.com.tr',
+      port: '465',
+      ssl: true,
+      username: 'tes@odeks.org',
+      password: '123456A+',
+      fromName: 'Muhammed Güneş',
+      replyTo: 'info@codeks.org',
+      bcc: [email],
+      subject: 'Van Belediyesi',
+      htmlBody: '<h1> Merhaba VAN BB | </h1><p>Mesaj</p>',
+      /*     
+      attachmentPaths:[
+        RNFS.ExternalDirectoryPath + "/image.jpg",
+        RNFS.DocumentDirectoryPath + "/test.txt",
+        RNFS.DocumentDirectoryPath + "/test2.csv",
+        RNFS.DocumentDirectoryPath+ "/pdffile.pdf",
+        RNFS.DocumentDirectoryPath + "/zipfile.zip",
+        RNFS.DocumentDirectoryPath+ "/image.png",
+      ],
+      attachmentNames:[
+        'image.jpg',
+        'firstFile.txt',
+        'secondFile.txt',
+        'pdfFile.pdf',
+        'zipExample.zip',
+        'pngImage.png'
+      ],
+      */
+
+    })
+
+      .then(success => alert(success))
+      .catch(err => alert(err));
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#dddddd'}}>
       <ScrollView style={{flex: 1}}>
@@ -121,7 +157,7 @@ const IletisimFormuScreen = () => {
           />
           {adiValid == false ? (
             <View style={{alignItems: 'center', marginBottom: 20}}>
-              <Text style={{color: '#fff000', fontSize: 12}}>
+              <Text style={{color: 'red', fontSize: 12}}>
                 adMsj {adiValidMesaj}
               </Text>
             </View>
@@ -145,7 +181,7 @@ const IletisimFormuScreen = () => {
           />
           {emailValid == false ? (
             <View style={{alignItems: 'center', marginBottom: 20}}>
-              <Text style={{color: '#fff000', fontSize: 12}}>
+              <Text style={{color: 'red', fontSize: 12}}>
                 mail {emailValidMesaj}
               </Text>
             </View>
@@ -169,15 +205,17 @@ const IletisimFormuScreen = () => {
           />
           {telefonValid == false ? (
             <View style={{alignItems: 'center', marginBottom: 20}}>
-              <Text style={{color: '#fff000', fontSize: 12}}>
-                adMsj {telefonValidMesaj}
+              <Text style={{color: 'red', fontSize: 12}}>
+                tel {telefonValidMesaj}
               </Text>
             </View>
           ) : (
             <></>
           )}
-
-          <DropDownPicker
+          
+              {/* <ModalDropdown options={['Öneri', 'Şikayet']}/> */}
+              
+          {/* <DropDownPicker
             items={[
               {
                 label: 'İstek',
@@ -196,26 +234,88 @@ const IletisimFormuScreen = () => {
                 label: 'Teşekkür',
                 value: 'Tesekkur',
               },
-             
             ]}
             placeholder="Konu Seçiniz *"
             defaultValue={konu}
-            containerStyle={{height:60}}
-            style={{backgroundColor: '#fff', marginBottom:10}}
+            containerStyle={{height: 60}}
+            style={{backgroundColor: '#fff', marginBottom: 10}}
             itemStyle={{
-              justifyContent : 'flex-start'
+              justifyContent: 'flex-start',
             }}
             dropDownStyle={{backgroundColor: '#fafafa'}}
-            onChangeItem={(item)=>checkKonu(item.value)}
+            onChangeItem={item => checkKonu(item.value)}
           />
-          {
-            konuValid==false ?(
-              <View style={{alignItems:'center',marginBottom:20}}>
-                <Text style={{}}></Text>
-                </View>
-            ):(<></>
-            )
-          }
+          {konuValid == false ? (
+            <View style={{alignItems: 'center', marginBottom: 20}}>
+              <Text style={{color: 'red', fontSize: 12}}>
+                konu {konuValidMesaj}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )} */}
+
+          <TextInput
+            value={mesaj}
+            onChangeText={text => checkMesaj(text)}
+            style={{
+              textAlignVertical: 'top',
+              backgroundColor: '#fff',
+              borderRadius: 30,
+              paddingLeft: 20,
+              marginBottom: 10,
+              height: 160,
+            }}
+            placeholder="Mesajınız"
+            fontSize={18}
+            multiline={true}
+            numberOfLines={4}
+          />
+          {mesajValid == false ? (
+            <View style={{alignItems: 'center', marginBottom: 20}}>
+              <Text style={{color: 'red', fontSize: 12}}>
+                mesaj {mesajValidMesaj}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
+          <CheckBox
+            onPress={() => setSozlesme(!sozlesme)}
+            title="Yukaridaki bilgilerin doğruluğunu onaylıyorum"
+            checked={sozlesme}
+          />
+          <TouchableOpacity
+            onPress={() => mailGonder()}
+            disabled={
+              sozlesme &&
+              adiValid &&
+              emailValid &&
+              telefonValid &&
+            //  konuValid &&
+              mesajValid
+                ? false
+                : true
+            }
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor:
+                sozlesme &&
+                adiValid &&
+                emailValid &&
+                telefonValid &&
+              //  konuValid &&
+                mesajValid
+                  ? '#0070d4'
+                  : '#888',
+              borderRadius: 30,
+              paddingLeft: 20,
+              marginVertical: 10,
+              height: 60,
+            }}>
+            <Text style={{color: '#fff', fontSize: 24}}>Gönder</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
